@@ -1,0 +1,9 @@
+@prb/test/=lib/prb-math/lib/prb-test/src/
+ds-test/=lib/solmate/lib/ds-test/src/
+forge-std/=lib/forge-std/src/
+openzeppelin/=lib/openzeppelin-contracts/contracts/
+openzeppelin-upgradeable/=lib/openzeppelin-contracts-upgradeable/contracts/
+@prb/math/=lib/prb-math/
+prb-test/=lib/prb-math/lib/prb-test/src/
+solmate/=lib/solmate/src/
+lzapp/=lib/solidity-examples/contracts/

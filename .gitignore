@@ -1,0 +1,29 @@
+# Compiler files
+cache/
+out/
+.vscode/
+cache-zk/
+node_modules/
+zkout/
+
+# Ignores development broadcast logs
+broadcast/
+
+# Dotenv file
+.env
+
+anvil.sh
+node_modules
+.env
+
+# Hardhat files
+/cache
+/artifacts
+
+# TypeChain files
+/typechain
+/typechain-types
+
+# solidity-coverage files
+/coverage
+/coverage.json
