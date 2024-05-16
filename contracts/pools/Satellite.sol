@@ -14,11 +14,11 @@ import "contracts/Common.sol";
 contract Satellite is Common {
     IVault immutable vault;
 
-    address immutable factory;
+    address immutable factory_;
 
-    constructor(IVault vault_, address factory_) {
+    constructor(IVault vault_, address factory) {
         vault = vault_;
-        factory = factory_;
+        factory_ = factory;
     }
 
     modifier onlyVault() {
@@ -40,7 +40,7 @@ contract Satellite is Common {
     modifier authenticate() {
         require(
             IAuthorizer(address(uint160(uint256(_readVaultStorage(SSLOT_HYPERCORE_AUTHORIZER))))).canPerform(
-                keccak256(abi.encodePacked(bytes32(uint256(uint160(factory))), msg.sig)), msg.sender, address(this)
+                keccak256(abi.encodePacked(bytes32(uint256(uint160(factory_))), msg.sig)), msg.sender, address(this)
             ),
             "unauthorized"
         );

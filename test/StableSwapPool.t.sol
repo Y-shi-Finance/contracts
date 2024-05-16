@@ -78,7 +78,7 @@ contract StableSwapPoolTest is Test {
             address(this)
         );
         IVC vc = new MockVC();
-        vault = IVault(adminFacet.deploy(vm.getCode("Diamond.yul:Diamond")));
+        vault = IVault(adminFacet.deploy(""));
         vault.admin_addFacet(new SwapFacet(vc, new WETH9(), NATIVE_TOKEN));
         vault.admin_addFacet(new SwapAuxillaryFacet(vc, NATIVE_TOKEN));
 

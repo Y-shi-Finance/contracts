@@ -12,23 +12,23 @@ import "contracts/pools/Satellite.sol";
 import "openzeppelin/utils/structs/BitMaps.sol";
 import "openzeppelin/utils/StorageSlot.sol";
 import "openzeppelin/utils/structs/EnumerableSet.sol";
+import "openzeppelin/access/Ownable.sol";
 
-contract Voter is Satellite {
+contract Voter is Ownable {
     using TokenLib for Token;
 
     Token immutable ballot;
-    address public owner;
+    IVault immutable vault;
+    address immutable admin;
 
-    event Owner(address);
-
-    constructor(address owner_, IVault vault_, Token ballot_) Satellite(vault_, msg.sender) {
-        owner = owner_;
+    constructor(address admin_, address user_, IVault vault_, Token ballot_) {
+        admin = admin_;
+        _transferOwnership(user_);
+        vault = vault_;
         ballot = ballot_;
-        emit Owner(owner);
     }
 
-    function execute(Token[] memory tokenRef, int128[] memory, VelocoreOperation[] memory ops) external {
-        require(msg.sender == owner, "not owner");
+    function execute(Token[] memory tokenRef, int128[] memory, VelocoreOperation[] memory ops) external onlyOwner {
         for (uint256 i = 0; i < ops.length; i++) {
             require(ops[i].poolId[0] == bytes1(0x03) || ops[i].poolId[0] == bytes1(0x04), "unauthorized");
 
@@ -43,18 +43,13 @@ contract Voter is Satellite {
 
     function sudo_execute(Token[] memory tokenRef, int128[] memory, VelocoreOperation[] memory ops)
         external
-        authenticate
     {
+        require(msg.sender == admin);
         vault.execute(tokenRef, new int128[](tokenRef.length), ops);
     }
 
-    function changeOwner(address newOwner) external {
-        require(msg.sender == owner, "not owner");
-        owner = newOwner;
-        emit Owner(newOwner);
-    }
-
-    function withdrawTokens(Token[] memory tokens) external authenticate {
+    function withdrawTokens(Token[] memory tokens) external {
+        require(msg.sender == admin);
         for (uint256 i = 0; i < tokens.length; i++) {
             tokens[i].transferFrom(address(this), msg.sender, tokens[i].balanceOf(address(this)));
         }
@@ -70,13 +65,5 @@ contract VoterFactory is Satellite {
 
     constructor(IVault vault_, Token ballot_) Satellite(vault_, address(this)) {
         ballot = ballot_;
-    }
-
-    function deploy(address owner, uint256 amount) external authenticate returns (address) {
-        Voter voter = new Voter(owner, vault, ballot);
-        ballot.transferFrom(msg.sender, address(voter), amount);
-        emit VoterCreated(owner, amount, address(voter));
-
-        return address(voter);
     }
 }

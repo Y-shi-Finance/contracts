@@ -70,7 +70,7 @@ contract XYKPoolTest is Test {
             auth,
             address(this)
         );
-        vault = IVault(adminFacet.deploy(vm.getCode("Diamond.yul:Diamond")));
+        vault = IVault(adminFacet.deploy(""));
         IVC vc = new MockVC();
         vault.admin_addFacet(new SwapFacet(vc, new WETH9(), NATIVE_TOKEN));
         vault.admin_addFacet(new SwapAuxillaryFacet(vc, NATIVE_TOKEN));

@@ -46,6 +46,12 @@ struct VelocoreOperation {
     bytes data;
 }
 
+struct route {
+    address from;
+    address to;
+    bool stable;
+}
+
 interface IVault {
     struct Facet {
         address facetAddress;
@@ -153,7 +159,7 @@ interface IVault {
     function swapExactTokensForTokens(
         uint256 amountIn,
         uint256 amountOutMin,
-        address[] calldata path,
+        route[] calldata path,
         address to,
         uint256 deadline
     ) external returns (uint256[] memory amounts);
@@ -161,14 +167,14 @@ interface IVault {
     function swapTokensForExactTokens(
         uint256 amountOut,
         uint256 amountInMax,
-        address[] calldata path,
+        route[] calldata path,
         address to,
         uint256 deadline
     ) external returns (uint256[] memory amounts);
 
     function swapExactETHForTokens(
         uint256 amountOutMin,
-        address[] calldata path,
+        route[] calldata path,
         address to,
         uint256 deadline
     ) external payable returns (uint256[] memory amounts);
@@ -176,7 +182,7 @@ interface IVault {
     function swapTokensForExactETH(
         uint256 amountOut,
         uint256 amountInMax,
-        address[] calldata path,
+        route[] calldata path,
         address to,
         uint256 deadline
     ) external returns (uint256[] memory amounts);
@@ -184,26 +190,26 @@ interface IVault {
     function swapExactTokensForETH(
         uint256 amountIn,
         uint256 amountOutMin,
-        address[] calldata path,
+        route[] calldata path,
         address to,
         uint256 deadline
     ) external returns (uint256[] memory amounts);
 
     function swapETHForExactTokens(
         uint256 amountOut,
-        address[] calldata path,
+        route[] calldata path,
         address to,
         uint256 deadline
     ) external payable returns (uint256[] memory amounts);
 
     function getAmountsOut(
         uint256 amountIn,
-        address[] calldata path
+        route[] calldata path
     ) external returns (uint256[] memory amounts);
 
     function getAmountsIn(
         uint256 amountOut,
-        address[] calldata path
+        route[] calldata path
     ) external returns (uint256[] memory amounts);
 
     function execute1(
@@ -300,10 +306,6 @@ interface IVault {
         uint256 deadline
     ) external returns (uint256 amountToken, uint256 amountETH);
 
-    function deposit(address p, uint256 a) external;
-
-    function withdraw(address p, uint256 a) external;
-
     function quoteRemoveLiquidity(
         address tokenA,
         address tokenB,
@@ -348,4 +350,6 @@ interface IVault {
         address to,
         uint256 deadline
     ) external returns (uint256 amountA, uint256 amountB);
+    function deposit(address pool, uint256 amount) external;
+    function withdraw(address pool, uint256 amount) external;
 }

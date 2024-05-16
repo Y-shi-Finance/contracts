@@ -30,7 +30,7 @@ using {Token_lte as <=} for Token global;
 using {Token_ne as !=} for Token global;
 
 Token constant NATIVE_TOKEN = Token.wrap(bytes32(0xEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE) & TOKEN_MASK);
-
+address constant WETH_ADDRESS = 0x4300000000000000000000000000000000000004;
 
 function TokenSpec_equals(TokenSpecType a, TokenSpecType b) pure returns (bool) {
     return TokenSpecType.unwrap(a) == TokenSpecType.unwrap(b);

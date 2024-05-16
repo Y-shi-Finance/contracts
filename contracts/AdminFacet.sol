@@ -46,7 +46,7 @@ contract AdminFacet is VaultStorage, IFacet {
         require(msg.sender == deployer);
         address deployed = address(new Diamond());
         require(deployed != address(0));
-        try BLAST.configureGovernor(deployed) {} catch (bytes memory) {}
+        //try BLAST.configureGovernor(deployed) {} catch (bytes memory) {}
         return deployed;
     }
 

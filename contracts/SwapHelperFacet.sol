@@ -17,11 +17,6 @@ import "contracts/pools/constant-product/ConstantProductPoolFactory.sol";
 import "openzeppelin/utils/math/SafeCast.sol";
 import "openzeppelin/utils/math/Math.sol";
 
-struct route {
-    address from;
-    address to;
-    bool stable;
-}
 
 contract SwapHelperFacet is VaultStorage, IFacet, Common {
     using UncheckedMemory for Token[];

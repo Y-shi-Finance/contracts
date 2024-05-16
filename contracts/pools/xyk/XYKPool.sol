@@ -37,8 +37,8 @@ contract XYKPool is SingleTokenGauge, PoolWithLPToken, ISwap, IBribe {
     event FeeChanged(uint256 fee1e18);
     event DecayChanged(uint256 decay);
 
-    Token public immutable token0;
-    Token public immutable token1;
+    Token immutable token0_;
+    Token immutable token1_;
     uint256 internal immutable _3token_i_0;
     uint256 internal immutable _3token_i_1;
     uint256 internal immutable _3token_i_lp;
@@ -52,6 +52,16 @@ contract XYKPool is SingleTokenGauge, PoolWithLPToken, ISwap, IBribe {
     int256 public index;
     int256 lastIndex;
     int256 logYieldEMA;
+    
+    function token0() external view returns (address) {
+        if (token0_ == NATIVE_TOKEN) return WETH_ADDRESS;
+        else return token0_.addr();
+    }
+
+    function token1() external view returns (address) {
+        if (token1_ == NATIVE_TOKEN) return WETH_ADDRESS;
+        else return token1_.addr();
+    }
 
     function getLogYieldEMA() external view returns (int256) {
         int256 indexNew = ((_invariant() * 1e18) / (totalSupply() + 2))
@@ -119,8 +129,8 @@ contract XYKPool is SingleTokenGauge, PoolWithLPToken, ISwap, IBribe {
         PoolWithLPToken._initialize(_name, _symbol);
         emit FeeChanged(fee1e9 * uint256(1e8));
         emit DecayChanged(decayRate);
-        token0 = t0;
-        token1 = t1;
+        token0_ = t0;
+        token1_ = t1;
         uint256 ilp;
         uint256 i0;
         uint256 i1;
@@ -202,8 +212,8 @@ contract XYKPool is SingleTokenGauge, PoolWithLPToken, ISwap, IBribe {
         if (t.length == 3) {
             require(
                 t.u(_3token_i_lp) == toToken(this) &&
-                    t.u(_3token_i_0) == token0 &&
-                    t.u(_3token_i_1) == token1
+                    t.u(_3token_i_0) == token0_ &&
+                    t.u(_3token_i_1) == token1_
             );
 
             int256 r_lp = r.u(_3token_i_lp);
@@ -268,14 +278,14 @@ contract XYKPool is SingleTokenGauge, PoolWithLPToken, ISwap, IBribe {
 
             Token tt = t.u(0);
             if (tt == toToken(this)) i_lp = 0;
-            else if (tt == token0) i_0 = 0;
-            else if (tt == token1) i_1 = 0;
+            else if (tt == token0_) i_0 = 0;
+            else if (tt == token1_) i_1 = 0;
             else revert("unsupported token");
 
             tt = t.u(1);
             if (tt == toToken(this)) i_lp = 1;
-            else if (tt == token0) i_0 = 1;
-            else if (tt == token1) i_1 = 1;
+            else if (tt == token0_) i_0 = 1;
+            else if (tt == token1_) i_1 = 1;
             else revert("unsupported token");
 
             int256 r_lp = i_lp == 2 ? int256(0) : r.u(i_lp);
@@ -338,8 +348,8 @@ contract XYKPool is SingleTokenGauge, PoolWithLPToken, ISwap, IBribe {
 
     function getReserves() public view returns (int256, int256, uint256) {
         return (
-            _getPoolBalance(token0).toInt256(),
-            _getPoolBalance(token1).toInt256(),
+            _getPoolBalance(token0_).toInt256(),
+            _getPoolBalance(token1_).toInt256(),
             block.timestamp
         );
     }
@@ -493,8 +503,8 @@ contract XYKPool is SingleTokenGauge, PoolWithLPToken, ISwap, IBribe {
         Token[] memory ret = new Token[](3);
         unchecked {
             ret.u(0, toToken(this));
-            ret.u(1, token0);
-            ret.u(2, token1);
+            ret.u(1, token0_);
+            ret.u(2, token1_);
         }
         return ret;
     }
@@ -527,8 +537,8 @@ contract XYKPool is SingleTokenGauge, PoolWithLPToken, ISwap, IBribe {
     function listedTokens() public view override returns (Token[] memory) {
         Token[] memory ret = new Token[](2);
         unchecked {
-            ret.u(0, token0);
-            ret.u(1, token1);
+            ret.u(0, token0_);
+            ret.u(1, token1_);
         }
         return ret;
     }
@@ -572,6 +582,7 @@ contract XYKPool is SingleTokenGauge, PoolWithLPToken, ISwap, IBribe {
         )
     {
         require(address(gauge) == address(this));
+        // this is a bug. SwapFacet bypasses this function.
         bribeTokens[0] = toToken(this);
         deltaGauge = new int128[](1);
         deltaPool = new int128[](1);

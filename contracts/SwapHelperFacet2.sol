@@ -19,11 +19,6 @@ import "openzeppelin/utils/math/Math.sol";
 
 
 contract SwapHelperFacet2 is VaultStorage, IFacet, Common {
-struct route {
-    address from;
-    address to;
-    bool stable;
-}
     using UncheckedMemory for Token[];
     using PoolBalanceLib for PoolBalance;
     using SafeCast for uint256;
