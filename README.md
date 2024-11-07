@@ -1,13 +1,12 @@
 # Helka Testnet Contracts
 
-| Contract  	|  Address 	|	
-|---	|---	| 
-| Authorizer  	| 0x3900D7E86D110B6824e63963dc851Ad4C0Aefb0F  	|
-| IVault  	| 0x344aC2b79c84753b9929a9c425CFE3A9098dEC84  	|
-| Lens  	| 0x2F4c24FFE0d6F3e0D1BbB716Cd7e102EEfC8A11c  	|
-| CPF(xykpool factory)  	| 0x6BfFE3aDBAE3B2b0194Dbc342F0F7AB30D4C7D2d  	|
-| YOO 	| 0x04d8B0de781191b1F9d757a5F207352FBE963198  	|
-| veYOO	| 0x1091C41FE244ed0320361952Db02872732f3BF61  	|
-| LinearBribeFactory  	| 0x0e9531cEd74de565FA5763B3e774F2ACd411b960  	|
-| WETH  	| 0xB4991Ece9474eC4312bdc8ac3A8782cdc4920443  	|
-| WETHConverter  	| 0x224bF931de112116B339713A3a73FcFAcFBED22C  	|
+| Contract | Address |
+| :------ | :------ |
+| IVault | [0x87b32C90d5C0026Cda2515662546862cb6726F99](https://explorer.hekla.taiko.xyz/address/0x87b32C90d5C0026Cda2515662546862cb6726F99) |
+| Lens | [0x12A441F1fF053a37c4de7e4D4CF3f8C3AA3C0c58](https://explorer.hekla.taiko.xyz/address/0x12A441F1fF053a37c4de7e4D4CF3f8C3AA3C0c58) |
+| CPF(xykpool factory) | [0x302b20D37EeD9Ab6C131644Ea3cE9a8da5Fd516C](https://explorer.hekla.taiko.xyz/address/0x302b20D37EeD9Ab6C131644Ea3cE9a8da5Fd516C) |
+| YOO | [0xC9b2D519b3cf6E2961b45a93a60c09a58Ad25153](https://explorer.hekla.taiko.xyz/address/0xC9b2D519b3cf6E2961b45a93a60c09a58Ad25153) |
+| veYOO | [0xA03053f57ad3a2e0f1f620CA2f36A55b47b04be4](https://explorer.hekla.taiko.xyz/address/0xA03053f57ad3a2e0f1f620CA2f36A55b47b04be4) |
+| LinearBribeFactory | [0xdF6eaD1DBe4163662b48082EF8bC587Dd3dC3F0B](https://explorer.hekla.taiko.xyz/address/0xdF6eaD1DBe4163662b48082EF8bC587Dd3dC3F0B) |
+| WETH | [0xAA0C3a82EF2681F484C77A96bd1831412cCC35c2](https://explorer.hekla.taiko.xyz/address/0xAA0C3a82EF2681F484C77A96bd1831412cCC35c2) |
+| WETHConverter | [0x0f7Fd843faB518b2531542727d818cf7805Acb34](https://explorer.hekla.taiko.xyz/address/0x0f7Fd843faB518b2531542727d818cf7805Acb34) |
