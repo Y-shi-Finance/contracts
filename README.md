@@ -1,4 +1,4 @@
-# Helka Testnet Contracts
+# Hekla Testnet Contracts
 
 | Contract | Address |
 | :------ | :------ |
